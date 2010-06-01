@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="button_ok">Ok</string>
+    <string name="old_password_label">Old Password:</string>
     <string name="password_label">Password:</string>
     <string name="password_confirm_label">Confirm password:</string>
     <string name="pass_upd">Password Updated!</string>
