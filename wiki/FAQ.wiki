@@ -1,0 +1,11 @@
+#summary FAQ Support for Text2GPS
+#labels Featured
+
+= Introduction =
+This page contains some common questions and answers, please add any new questions in the issues section
+
+
+= FAQ =
+
+ * Q. How Do you activate the application
+ * A. Send a text message to your phone with "Locate:" then your password with no spaces
