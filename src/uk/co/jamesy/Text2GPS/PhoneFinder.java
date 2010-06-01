@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,14 +22,30 @@ public class PhoneFinder extends Activity {
 
 	private EditText pass1;
 	private EditText pass2;
+	private EditText oldPass;
+	private int mode = -1;
+	private String expass = "";
 
 	@Override
 	public void onCreate(Bundle bun) {
 		super.onCreate(bun);
-		setContentView(R.layout.main);
+		SharedPreferences passwdfile = this.getSharedPreferences(
+				PhoneFinder.PASSWORD_PREF_KEY, 0);
+		expass = passwdfile.getString(PhoneFinder.PASSWORD_PREF_KEY, null);
+		if (expass.length() < 1) {
+			setContentView(R.layout.main);
 
-		pass1 = (EditText) findViewById(R.id.password);
-		pass2 = (EditText) findViewById(R.id.password_confirm);
+			pass1 = (EditText) findViewById(R.id.password);
+			pass2 = (EditText) findViewById(R.id.password_confirm);
+
+		} else {
+			mode = 1;
+			setContentView(R.layout.passprompt);
+
+			pass1 = (EditText) findViewById(R.id.password);
+			pass2 = (EditText) findViewById(R.id.password_confirm);
+			oldPass = (EditText) findViewById(R.id.old_password);
+		}
 
 		Button button = (Button) findViewById(R.id.ok);
 		button.setOnClickListener(clickListener);
@@ -40,6 +57,10 @@ public class PhoneFinder extends Activity {
 		public void onClick(View v) {
 			String p1 = pass1.getText().toString();
 			String p2 = pass2.getText().toString();
+			String eP = "";
+			if (mode == 1) {
+				eP = oldPass.getText().toString();
+			}
 
 			Dialog di = new Dialog(PhoneFinder.this);
 			di.setContentView(R.layout.appdia);
@@ -48,7 +69,8 @@ public class PhoneFinder extends Activity {
 			di.setCanceledOnTouchOutside(true);
 			TextView t = (TextView) di.findViewById(R.id.TextView01);
 
-			if (p1.equals(p2)) {
+			if ((mode == -1 && p1.equals(p2))
+					|| (mode == 1 && p1.equals(p2) && checkPass(eP, expass))) {
 
 				if (p1.length() >= 6 || p2.length() >= 6) {
 
@@ -92,6 +114,16 @@ public class PhoneFinder extends Activity {
 			Log.e("MD5", e.getMessage());
 			return null;
 		}
+	}
+
+	public boolean checkPass(String pass, String hash) {
+		boolean check = false;
+		pass = getMd5Hash(pass);
+		if (hash.equals(pass)) {
+			check = true;
+		}
+
+		return check;
 	}
 
 }
