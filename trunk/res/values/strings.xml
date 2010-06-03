@@ -14,5 +14,6 @@
     <string name="app_name">Text2GPS</string>
 <string name="pass_valfail">Password must be at least 6 characters long!</string>
 <string name="pass_noMatch">Passwords do not match</string>
+<string name="pass_OldnoMatch">Old password is incorrect</string>
 <string name="alert">Alert</string>
 </resources>
