@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="button_ok">Ok</string>
+<string name="old_password_label">Altes Passwort:</string>
+<string name="password_label">Passwort:</string>
+<string name="password_confirm_label">Passwort bestätigen:</string>
+<string name="pass_upd">Passwort aktualisiert!</string>
+<string name="key">Finden:</string>
+<string name="gps_lat">Latitüde:</string>
+<string name="gps_long">Längengrad:</string>
+<string name="gps_acc">Exaktheit:</string>
+<string name="old_gps">GPS Satellit nicht gefunden Adresse um:</string>
+<string name="gps_fail">GPS nicht gefunden!</string>
+<string name="app_name">Text2GPS</string>
+<string name="pass_valfail">Passwortmuss mindestens 6 Buchstaben lang!</string>
+<string name="pass_noMatch">Passwörter nicht zusammen</string>
+<string name="pass_OldnoMatch">Altes Passwort unrichtig ist</string>
+<string name="alert">Notieren</string>
+</resources>
