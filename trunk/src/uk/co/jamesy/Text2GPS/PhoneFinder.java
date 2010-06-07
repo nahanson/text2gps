@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class PhoneFinder extends Activity {
 
@@ -24,22 +24,25 @@ public class PhoneFinder extends Activity {
 	private EditText pass2;
 	private EditText oldPass;
 	private int mode = -1;
-	private String expass = "";
+	private String expass;
 
 	@Override
 	public void onCreate(Bundle bun) {
 		super.onCreate(bun);
+		// check for existing password and display relevant UI
 		SharedPreferences passwdfile = this.getSharedPreferences(
 				PhoneFinder.PASSWORD_PREF_KEY, 0);
-		expass = passwdfile.getString(PhoneFinder.PASSWORD_PREF_KEY, null);
-		if (expass.length() < 1) {
-			setContentView(R.layout.main);
 
+		if (passwdfile.getString(PhoneFinder.PASSWORD_PREF_KEY, null) == null) {
+			setContentView(R.layout.main);
+			// no password set
 			pass1 = (EditText) findViewById(R.id.password);
 			pass2 = (EditText) findViewById(R.id.password_confirm);
 
 		} else {
+			// password existing
 			mode = 1;
+			expass = passwdfile.getString(PhoneFinder.PASSWORD_PREF_KEY, null);
 			setContentView(R.layout.passprompt);
 
 			pass1 = (EditText) findViewById(R.id.password);
@@ -55,6 +58,7 @@ public class PhoneFinder extends Activity {
 	private OnClickListener clickListener = new OnClickListener() {
 
 		public void onClick(View v) {
+			// get inputs & context
 			String p1 = pass1.getText().toString();
 			String p2 = pass2.getText().toString();
 			String eP = "";
@@ -62,37 +66,41 @@ public class PhoneFinder extends Activity {
 				eP = oldPass.getText().toString();
 			}
 
-			Dialog di = new Dialog(PhoneFinder.this);
-			di.setContentView(R.layout.appdia);
-			di.setTitle(getText(R.string.alert));
-			di.setCancelable(true);
-			di.setCanceledOnTouchOutside(true);
-			TextView t = (TextView) di.findViewById(R.id.TextView01);
+			Context context = getApplicationContext();
+			// check mode & existing password
+			if ((mode == 1 && checkPass(eP, expass)) || mode == -1) {
+				// check new passwords match
+				if (p1.equals(p2)) {
+					// validate new password
+					if (p1.length() >= 6 || p2.length() >= 6) {
 
-			if ((mode == -1 && p1.equals(p2))
-					|| (mode == 1 && p1.equals(p2) && checkPass(eP, expass))) {
+						Editor passwdfile = getSharedPreferences(
+								PhoneFinder.PASSWORD_PREF_KEY, 0).edit();
+						
+						String md5hash = getMd5Hash(p1);
+						passwdfile.putString(PhoneFinder.PASSWORD_PREF_KEY,
+								md5hash);
+						passwdfile.commit();
 
-				if (p1.length() >= 6 || p2.length() >= 6) {
+						popNote(context, R.string.pass_upd, Toast.LENGTH_SHORT);
 
-					Editor passwdfile = getSharedPreferences(
-							PhoneFinder.PASSWORD_PREF_KEY, 0).edit();
-					String md5hash = getMd5Hash(p1);
-					passwdfile
-							.putString(PhoneFinder.PASSWORD_PREF_KEY, md5hash);
-					passwdfile.commit();
+					} else
 
-					t.setText(R.string.pass_upd);
-					di.show();
+						popNote(context, R.string.pass_valfail,
+								Toast.LENGTH_SHORT);
 
-				} else
-					t.setText(R.string.pass_valfail);
-				di.show();
+				} else {
+					pass1.setText("");
+					pass2.setText("");
 
+					popNote(context, R.string.pass_noMatch, Toast.LENGTH_SHORT);
+				}
 			} else {
 				pass1.setText("");
 				pass2.setText("");
-				t.setText(R.string.pass_noMatch);
-				di.show();
+				oldPass.setText("");
+
+				popNote(context, R.string.pass_OldnoMatch, Toast.LENGTH_SHORT);
 			}
 
 		}
@@ -124,6 +132,10 @@ public class PhoneFinder extends Activity {
 		}
 
 		return check;
+	}
+
+	public void popNote(Context context, int note, int duration) {
+		Toast.makeText(context, note, duration).show();
 	}
 
 }

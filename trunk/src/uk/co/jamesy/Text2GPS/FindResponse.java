@@ -30,6 +30,7 @@ public class FindResponse extends Service {
 	private Timer timer;
 	private PowerManager pm;
 	private WakeLock wl;
+	private int locs = 0;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate();
@@ -37,16 +38,19 @@ public class FindResponse extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-
+		// get message details from intent
 		Bundle bundle = intent.getExtras();
 		from = bundle.getString("FROM");
 		message = bundle.getString("MESSAGE");
 		correctMd5 = bundle.getString("MD5");
 
+		// get & check password
 		String[] tokens = message.split(":");
 
 		if (tokens.length >= 2) {
+			
 			String md5hash = PhoneFinder.getMd5Hash(tokens[1]);
+			
 			if (md5hash.equals(correctMd5)) {
 				startGPS();
 			} else {
@@ -58,37 +62,31 @@ public class FindResponse extends Service {
 		}
 	}
 
-	/** start getting gps cords */
 	private void startGPS() {
 
-		// ---use the LocationManager class to obtain GPS locations---
+		// get location manager
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locationListener = new MyLocationListener();
+		locationListener = new LocListener();
 
-		// first check if provider is enabled
+		// check if gps is enabled
 		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-
+			
+			// start request for location
 			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 800, 0,
-					locationListener); // start requests
+					locationListener); 
 
-			startTimer(120); // start timer for two mins
+			startTimer(120);
 
-			// turn the screen on else GPS wont update
+			// turn the screen to allow gps to update
 			try {
 
 				pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-				wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | // could
-						// use
-						// bright
-						// instead
-						PowerManager.ACQUIRE_CAUSES_WAKEUP | // so we actually
-						// wake the
-						// device
-						PowerManager.ON_AFTER_RELEASE // and we keep it on for a
-				// bit after release
+				wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | 
+						PowerManager.ACQUIRE_CAUSES_WAKEUP | 
+						PowerManager.ON_AFTER_RELEASE 
 						, "My Tag");
-				wl.acquire(); // ..screen will stay on until "wl.release();" is
-				// called
+				wl.acquire(); // ..screen will stay on until "wl.release();"
+				
 			} catch (Exception e) {
 				System.out.print(e.toString());
 			}
@@ -98,26 +96,29 @@ public class FindResponse extends Service {
 		}
 	}
 
-	public class MyLocationListener implements LocationListener {
+	public class LocListener implements LocationListener {
 
 		public void onLocationChanged(Location loc) {
 			try {
-				if (loc != null) { // if we have cords
-					// get coordinates and convert to strings
+				if (loc != null && locs == 3) { 
+					// convert to strings
 					strlat = Double.toString(loc.getLatitude());
 					strlon = Double.toString(loc.getLongitude());
 					accura = Float.toString(loc.getAccuracy());
-					// call method to send cords
+					
+					// send the location
 					sendSMS(from, "" + getText(R.string.gps_lat) + strlat
 							+ "\n" + getText(R.string.gps_long) + strlon + "\n"
 							+ getText(R.string.gps_acc) + accura);
-
-					String strWebLink = mapGPS(strlat, strlon);
+					// generate maps link & send
+					String strWebLink = mapLink(strlat, strlon);
 					if (strWebLink != null) {
 						sendSMS(from, strWebLink);
 					}
 
 					stopGPS();
+				}else{
+					locs++;
 				}
 			} catch (Exception e) {
 				System.out.print(e.toString());
@@ -152,8 +153,8 @@ public class FindResponse extends Service {
 		}
 	}
 
-	/** create a link to google maps with the given cords */
-	private String mapGPS(String lat, String lon) {
+	
+	private String mapLink(String lat, String lon) {
 		try {
 			lat = lat.substring(0, (lat.indexOf(".") + 8));
 			lon = lon.substring(0, (lon.indexOf(".") + 8));
@@ -161,14 +162,15 @@ public class FindResponse extends Service {
 			String webAddress = "http://maps.google.com/maps?q=" + lat + ","
 					+ lon;
 			return webAddress;
+			
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	/** when gps location can not be gotten */
+	
 	private void failedGPS() {
-		// failed to get cords so we send the last know
+		// send last known locations
 
 		Location lastKnownLoc = lm
 				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -185,7 +187,7 @@ public class FindResponse extends Service {
 					+ getText(R.string.gps_long) + lastLon + "\n"
 					+ getText(R.string.gps_acc) + lastAcc);
 
-			String strWebLink = mapGPS(strlat, strlon);
+			String strWebLink = mapLink(strlat, strlon);
 			if (strWebLink != null) {
 				sendSMS(from, strWebLink);
 			}
@@ -196,17 +198,14 @@ public class FindResponse extends Service {
 		stopGPS();
 	}
 
-	/**
-	 * stop gps updates, kill timer, release the wake lock, and stop the service
-	 */
 	private void stopGPS() {
-		// only stop if it was ever started
+		// clean up and kill the service
 		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			lm.removeUpdates(locationListener); // stop GPS updating
+			lm.removeUpdates(locationListener); 
 		}
 
 		if (timer != null) {
-			timer.cancel(); // Terminate the thread
+			timer.cancel(); 
 		}
 
 		if (wl != null) {
@@ -216,12 +215,12 @@ public class FindResponse extends Service {
 		stopService();
 	}
 
-	/** stop this service and save the debug log if we should */
+
 	private void stopService() {
-		stopSelf(); // stop service
+		stopSelf(); 
 	}
 
-	/** send a text message args phone number and the message */
+
 	private void sendSMS(String number, String body) {
 		try {
 			SmsManager sm = SmsManager.getDefault();
