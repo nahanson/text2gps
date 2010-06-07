@@ -11,4 +11,4 @@ This page contains some common questions and answers, please add any new questio
  * A. Send a text message to your phone with "Locate:" then your password with no spaces
 
  * Q. I have forgotten my password how do I reset it
- * A. Reinstall the applications - Find the application in your markets downloads section and select uninstall
+ * A. Enter "its3allb2roke1n" (without the "") in the old password field and select a new password
