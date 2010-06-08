@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_ok">確定</string>
+    <string name="old_password_label">舊密碼:</string>
+    <string name="password_label">面貌:</string>
+    <string name="password_confirm_label">確認密碼:</string>
+    <string name="pass_upd">密碼更新!</string>
+    <string name="key">定位:</string>
+    <string name="gps_lat">緯度:</string>
+    <string name="gps_long">經度:</string>
+    <string name="gps_acc">精確度:</string>
+    <string name="old_gps">GPS SAT 沒有找到位置:</string>
+    <string name="gps_fail">GPS 無法使用!</string>
+    <string name="app_name">Text2GPS</string>
+<string name="pass_valfail">密碼必須至少 6 個字元長!</string>
+<string name="pass_noMatch">密碼不比對</string>
+<string name="pass_OldnoMatch">舊的密碼不正確</string>
+<string name="alert">警報</string>
+</resources>
