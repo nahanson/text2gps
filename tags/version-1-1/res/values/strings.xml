@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="button_ok">Ok</string>
+	<string name="old_password_label">Old Password:</string>
+	<string name="password_label">Password:</string>
+	<string name="password_confirm_label">Confirm password:</string>
+	<string name="pass_upd">Password Updated!</string>
+	<string name="key">Locate:</string>
+	<string name="gps_lat">Latitude:</string>
+	<string name="gps_long">Longitude:</string>
+	<string name="gps_acc">Accuracy:</string>
+	<string name="old_gps">GPS SAT not found location at:</string>
+	<string name="gps_fail">GPS not available!</string>
+	<string name="app_name">Text2GPS</string>
+	<string name="pass_valfail">Password must be at least 6 characters long!
+	</string>
+	<string name="pass_noMatch">Passwords do not match</string>
+	<string name="pass_OldnoMatch">Old password is incorrect</string>
+	<string name="alert">Alert</string>
+	<string name="idiot">itsallbroken</string>
+	<string name="help_link">http://www.jamesy.co.uk/work/text-2-gps/help</string>
+	<string name="help_text">For Help</string>
+</resources>
