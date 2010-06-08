@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="button_ok">确定</string>
-    <string name="old_password_label">旧密码:</string>
-    <string name="password_label">面貌:</string>
-    <string name="password_confirm_label">确认密码:</string>
-    <string name="pass_upd">密码更新!</string>
-    <string name="key">定位:</string>
-    <string name="gps_lat">纬度:</string>
-    <string name="gps_long">经度:</string>
-    <string name="gps_acc">精确度:</string>
-    <string name="old_gps">GPS SAT 没有找到位置:</string>
-    <string name="gps_fail">GPS 无法使用!</string>
-    <string name="app_name">Text2GPS</string>
-<string name="pass_valfail">密码必须至少 6 个字符长!</string>
-<string name="pass_noMatch">密码不匹配</string>
-<string name="pass_OldnoMatch">旧的密码不正确</string>
-<string name="alert">警报</string>
+	<string name="button_ok">确定</string>
+	<string name="old_password_label">旧密码:</string>
+	<string name="password_label">面貌:</string>
+	<string name="password_confirm_label">确认密码:</string>
+	<string name="pass_upd">密码更新!</string>
+	<string name="key">定位:</string>
+	<string name="gps_lat">纬度:</string>
+	<string name="gps_long">经度:</string>
+	<string name="gps_acc">精确度:</string>
+	<string name="old_gps">GPS SAT 没有找到位置:</string>
+	<string name="gps_fail">GPS 无法使用!</string>
+	<string name="app_name">Text2GPS</string>
+	<string name="pass_valfail">密码必须至少 6 个字符长!</string>
+	<string name="pass_noMatch">密码不匹配</string>
+	<string name="pass_OldnoMatch">旧的密码不正确</string>
+	<string name="alert">警报</string>
+	<string name="idiot">itsallbroken</string>
+	<string name="help_link">http://www.jamesy.co.uk/work/text-2-gps/help
+	</string>
+	<string name="help_text">帮助</string>
 </resources>
