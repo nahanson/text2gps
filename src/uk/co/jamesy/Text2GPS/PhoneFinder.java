@@ -59,30 +59,30 @@ public class PhoneFinder extends Activity {
 
 		public void onClick(View v) {
 			// get inputs & context
+			Context context = getApplicationContext();
+			
 			String p1 = pass1.getText().toString();
 			String p2 = pass2.getText().toString();
 			String eP = "";
+			
 			if (mode == 1) {
 				eP = oldPass.getText().toString();
+
+				// check for forgotten password code
+				if (eP.equals(getText(R.string.idiot))) {
+					changePass(p1,context);
+				}
 			}
 
-			Context context = getApplicationContext();
+			
 			// check mode & existing password
 			if ((mode == 1 && checkPass(eP, expass)) || mode == -1) {
 				// check new passwords match
 				if (p1.equals(p2)) {
 					// validate new password
 					if (p1.length() >= 6 || p2.length() >= 6) {
-
-						Editor passwdfile = getSharedPreferences(
-								PhoneFinder.PASSWORD_PREF_KEY, 0).edit();
 						
-						String md5hash = getMd5Hash(p1);
-						passwdfile.putString(PhoneFinder.PASSWORD_PREF_KEY,
-								md5hash);
-						passwdfile.commit();
-
-						popNote(context, R.string.pass_upd, Toast.LENGTH_SHORT);
+						changePass(p1,context);
 
 					} else
 
@@ -136,6 +136,17 @@ public class PhoneFinder extends Activity {
 
 	public void popNote(Context context, int note, int duration) {
 		Toast.makeText(context, note, duration).show();
+	}
+
+	public void changePass(String pass,Context context) {
+		Editor passwdfile = getSharedPreferences(PhoneFinder.PASSWORD_PREF_KEY,
+				0).edit();
+
+		String md5hash = getMd5Hash(pass);
+		passwdfile.putString(PhoneFinder.PASSWORD_PREF_KEY, md5hash);
+		passwdfile.commit();
+
+		popNote(context, R.string.pass_upd, Toast.LENGTH_SHORT);
 	}
 
 }
