@@ -100,7 +100,7 @@ public class FindResponse extends Service {
 
 		public void onLocationChanged(Location loc) {
 			try {
-				if (loc != null && locs == 3) { 
+				if (loc != null && locs == 15 || loc.getAccuracy() > 0.0 && loc.getAccuracy() < 5.0) { 
 					// convert to strings
 					strlat = Double.toString(loc.getLatitude());
 					strlon = Double.toString(loc.getLongitude());
@@ -156,8 +156,8 @@ public class FindResponse extends Service {
 	
 	private String mapLink(String lat, String lon) {
 		try {
-			lat = lat.substring(0, (lat.indexOf(".") + 8));
-			lon = lon.substring(0, (lon.indexOf(".") + 8));
+			//lat = lat.substring(0, (lat.indexOf(".") + 15));
+			//lon = lon.substring(0, (lon.indexOf(".") + 10));
 
 			String webAddress = "http://maps.google.com/maps?q=" + lat + ","
 					+ lon;
