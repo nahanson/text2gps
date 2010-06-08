@@ -15,8 +15,10 @@ public final class R {
     }
     public static final class id {
         public static final int TextView01=0x7f050000;
+        public static final int help_link=0x7f050005;
+        public static final int help_text=0x7f050004;
         public static final int ok=0x7f050003;
-        public static final int old_password=0x7f050004;
+        public static final int old_password=0x7f050006;
         public static final int password=0x7f050001;
         public static final int password_confirm=0x7f050002;
     }
@@ -33,6 +35,9 @@ public final class R {
         public static final int gps_fail=0x7f04000a;
         public static final int gps_lat=0x7f040006;
         public static final int gps_long=0x7f040007;
+        public static final int help_link=0x7f040011;
+        public static final int help_text=0x7f040012;
+        public static final int idiot=0x7f040010;
         public static final int key=0x7f040005;
         public static final int old_gps=0x7f040009;
         public static final int old_password_label=0x7f040001;
