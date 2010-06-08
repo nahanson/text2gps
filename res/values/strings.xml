@@ -17,7 +17,7 @@
 	<string name="pass_noMatch">Passwords do not match</string>
 	<string name="pass_OldnoMatch">Old password is incorrect</string>
 	<string name="alert">Alert</string>
-	<string name="idiot">its3allb2roke1n</string>
+	<string name="idiot">itsallbroken</string>
 	<string name="help_link">http://www.jamesy.co.uk/work/text-2-gps/help</string>
 	<string name="help_text">For Help</string>
 </resources>
