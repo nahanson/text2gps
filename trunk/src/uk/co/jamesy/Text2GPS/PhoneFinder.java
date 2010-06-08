@@ -70,7 +70,7 @@ public class PhoneFinder extends Activity {
 
 				// check for forgotten password code
 				if (eP.equals(getText(R.string.idiot))) {
-					changePass(p1,context);
+					mode =-1;
 				}
 			}
 
