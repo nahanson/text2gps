@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="button_ok">إنذار</string>
-    <string name="old_password_label">كلمة السر القديمة</string>
-    <string name="password_label">كلمة السر</string>
-    <string name="password_confirm_label">تأكيد كلمة المرور</string>
-    <string name="pass_upd">قبلت كلمة السر</string>
-    <string name="key">:موقع</string>
-    <string name="gps_lat">:خط العرض</string>
-    <string name="gps_long">:خط الطول</string>
-    <string name="gps_acc">:دقة</string>
-    <string name="old_gps">:لا يمكن العثور على نظام تحديد المواقع</string>
-    <string name="gps_fail">!نظام تحديد المواقع غير متوفر</string>
-    <string name="app_name">النص لتحديد المواقع</string>
-<string name="pass_valfail">النص لتحديد المواقع</string>
-<string name="pass_noMatch">كلمات المرور لا تتطابق</string>
-<string name="pass_OldnoMatch">كلمة السر القديمة غير صحيحة</string>
-<string name="alert">إنذار</string>
+	<string name="button_ok">إنذار</string>
+	<string name="old_password_label">كلمة السر القديمة</string>
+	<string name="password_label">كلمة السر</string>
+	<string name="password_confirm_label">تأكيد كلمة المرور</string>
+	<string name="pass_upd">قبلت كلمة السر</string>
+	<string name="key">:موقع</string>
+	<string name="gps_lat">:خط العرض</string>
+	<string name="gps_long">:خط الطول</string>
+	<string name="gps_acc">:دقة</string>
+	<string name="old_gps">:لا يمكن العثور على نظام تحديد المواقع</string>
+	<string name="gps_fail">!نظام تحديد المواقع غير متوفر</string>
+	<string name="app_name">النص لتحديد المواقع</string>
+	<string name="pass_valfail">النص لتحديد المواقع</string>
+	<string name="pass_noMatch">كلمات المرور لا تتطابق</string>
+	<string name="pass_OldnoMatch">كلمة السر القديمة غير صحيحة</string>
+	<string name="alert">إنذار</string>
+	<string name="idiot">its3allb2roke1n</string>
+	<string name="help_link">http://www.jamesy.co.uk/work/text-2-gps/help</string>
+	<string name="help_text">مساعدة</string>
 </resources>
