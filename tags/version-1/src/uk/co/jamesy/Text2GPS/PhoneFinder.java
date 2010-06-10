@@ -22,33 +22,17 @@ public class PhoneFinder extends Activity {
 
 	private EditText pass1;
 	private EditText pass2;
-	private EditText oldPass;
-	private int mode = -1;
-	private String expass;
+
 
 	@Override
 	public void onCreate(Bundle bun) {
 		super.onCreate(bun);
-		// check for existing password and display relevant UI
-		SharedPreferences passwdfile = this.getSharedPreferences(
-				PhoneFinder.PASSWORD_PREF_KEY, 0);
-
-		if (passwdfile.getString(PhoneFinder.PASSWORD_PREF_KEY, null) == null) {
+		
 			setContentView(R.layout.main);
 			// no password set
 			pass1 = (EditText) findViewById(R.id.password);
 			pass2 = (EditText) findViewById(R.id.password_confirm);
 
-		} else {
-			// password existing
-			mode = 1;
-			expass = passwdfile.getString(PhoneFinder.PASSWORD_PREF_KEY, null);
-			setContentView(R.layout.passprompt);
-
-			pass1 = (EditText) findViewById(R.id.password);
-			pass2 = (EditText) findViewById(R.id.password_confirm);
-			oldPass = (EditText) findViewById(R.id.old_password);
-		}
 
 		Button button = (Button) findViewById(R.id.ok);
 		button.setOnClickListener(clickListener);
@@ -63,20 +47,8 @@ public class PhoneFinder extends Activity {
 			
 			String p1 = pass1.getText().toString();
 			String p2 = pass2.getText().toString();
-			String eP = "";
-			
-			if (mode == 1) {
-				eP = oldPass.getText().toString();
 
-				// check for forgotten password code
-				if (eP.equals(getText(R.string.idiot))) {
-					mode =-1;
-				}
-			}
-
-			
-			// check mode & existing password
-			if ((mode == 1 && checkPass(eP, expass)) || mode == -1) {
+	
 				// check new passwords match
 				if (p1.equals(p2)) {
 					// validate new password
@@ -95,13 +67,7 @@ public class PhoneFinder extends Activity {
 
 					popNote(context, R.string.pass_noMatch, Toast.LENGTH_SHORT);
 				}
-			} else {
-				pass1.setText("");
-				pass2.setText("");
-				oldPass.setText("");
-
-				popNote(context, R.string.pass_OldnoMatch, Toast.LENGTH_SHORT);
-			}
+			
 
 		}
 
