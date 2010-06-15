@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.gsm.SmsMessage;
+import uk.co.jamesy.Text2GPS.PhoneFinder;
 
+//this is to stop eclipse complaining 
+//(smsmessage is depreciated since 1.6 but as this app is technically 1.5 we will have to live with it)
+@SuppressWarnings("deprecation") 
 public class FinderReceiver extends BroadcastReceiver {
 
 	@Override
