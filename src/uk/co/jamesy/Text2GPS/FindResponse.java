@@ -16,6 +16,9 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.telephony.gsm.SmsManager;
 
+//this is to stop eclipse complaining 
+//(smsmessage is depreciated since 1.6 but as this app is technically 1.5 we will have to live with it)
+@SuppressWarnings("deprecation")
 public class FindResponse extends Service {
 
 	private String from;
@@ -31,6 +34,7 @@ public class FindResponse extends Service {
 	private PowerManager pm;
 	private WakeLock wl;
 	private int locs = 0;
+	private final int MAXLOCS = 60;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate();
@@ -100,7 +104,7 @@ public class FindResponse extends Service {
 
 		public void onLocationChanged(Location loc) {
 			try {
-				if (loc != null && locs == 15 || loc.getAccuracy() > 0.0 && loc.getAccuracy() < 5.0) { 
+				if (loc != null && locs == MAXLOCS || loc.getAccuracy() > 0.0 && loc.getAccuracy() < 0.2) { 
 					// convert to strings
 					strlat = Double.toString(loc.getLatitude());
 					strlon = Double.toString(loc.getLongitude());
@@ -219,6 +223,7 @@ public class FindResponse extends Service {
 	private void stopService() {
 		stopSelf(); 
 	}
+
 
 
 	private void sendSMS(String number, String body) {
