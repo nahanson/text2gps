@@ -14,11 +14,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.telephony.gsm.SmsManager;
+import android.telephony.SmsManager;
 
-//this is to stop eclipse complaining 
-//(smsmessage is depreciated since 1.6 but as this app is technically 1.5 we will have to live with it)
-@SuppressWarnings("deprecation")
+
 public class FindResponse extends Service {
 
 	private String from;
@@ -191,7 +189,7 @@ public class FindResponse extends Service {
 					+ getText(R.string.gps_long) + lastLon + "\n"
 					+ getText(R.string.gps_acc) + lastAcc);
 
-			String strWebLink = mapLink(strlat, strlon);
+			String strWebLink = mapLink(lastLat, lastLon);
 			if (strWebLink != null) {
 				sendSMS(from, strWebLink);
 			}
