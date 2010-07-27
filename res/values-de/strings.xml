@@ -5,7 +5,7 @@
 	<string name="password_label">Passwort:</string>
 	<string name="password_confirm_label">Passwort bestätigen:</string>
 	<string name="pass_upd">Passwort aktualisiert!</string>
-	<string name="key">Finden:</string>
+	<string name="key">Locate:</string>
 	<string name="gps_lat">Latitüde:</string>
 	<string name="gps_long">Längengrad:</string>
 	<string name="gps_acc">Exaktheit:</string>
