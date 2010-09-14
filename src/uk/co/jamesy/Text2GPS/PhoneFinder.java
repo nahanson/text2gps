@@ -3,7 +3,6 @@ package uk.co.jamesy.Text2GPS;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -40,7 +39,7 @@ public class PhoneFinder extends Activity {
 			pass2 = (EditText) findViewById(R.id.password_confirm);
 
 		} else {
-			// password existing
+			// password existing add confirm field
 			mode = 1;
 			expass = passwdfile.getString(PhoneFinder.PASSWORD_PREF_KEY, null);
 			setContentView(R.layout.passprompt);
@@ -60,29 +59,28 @@ public class PhoneFinder extends Activity {
 		public void onClick(View v) {
 			// get inputs & context
 			Context context = getApplicationContext();
-			
+
 			String p1 = pass1.getText().toString();
 			String p2 = pass2.getText().toString();
 			String eP = "";
-			
+
 			if (mode == 1) {
 				eP = oldPass.getText().toString();
 
 				// check for forgotten password code
 				if (eP.equals(getText(R.string.idiot))) {
-					mode =-1;
+					mode = -1;
 				}
 			}
 
-			
 			// check mode & existing password
 			if ((mode == 1 && checkPass(eP, expass)) || mode == -1) {
 				// check new passwords match
 				if (p1.equals(p2)) {
 					// validate new password
 					if (p1.length() >= 6 || p2.length() >= 6) {
-						
-						changePass(p1,context);
+
+						changePass(p1, context);
 
 					} else
 
@@ -107,6 +105,13 @@ public class PhoneFinder extends Activity {
 
 	};
 
+	/**
+	 * Hashes a string
+	 * 
+	 * @param input
+	 *            String to be hashed
+	 * @return String containing md5 hash of input
+	 */
 	public static String getMd5Hash(String input) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
@@ -124,6 +129,15 @@ public class PhoneFinder extends Activity {
 		}
 	}
 
+	/**
+	 * Checks if a password matches the stored hash
+	 * 
+	 * @param pass
+	 *            String containing password
+	 * @param hash
+	 *            String Containing stored hash
+	 * @return boolean Passwords matching
+	 */
 	public boolean checkPass(String pass, String hash) {
 		boolean check = false;
 		pass = getMd5Hash(pass);
@@ -134,11 +148,31 @@ public class PhoneFinder extends Activity {
 		return check;
 	}
 
+	/**
+	 * show a "Toast" message to the user containing given text
+	 * 
+	 * @param context
+	 *            the context in which to display the toast
+	 * @param note
+	 *            text of the toast
+	 * @param duration
+	 *            time to display
+	 */
 	public void popNote(Context context, int note, int duration) {
 		Toast.makeText(context, note, duration).show();
 	}
 
-	public void changePass(String pass,Context context) {
+	/**
+	 * Hash and store new password
+	 * 
+	 * @param pass
+	 *            new password
+	 * @param context
+	 *            application context
+	 * @see uk.co.jamesy.PhoneFinder.popNote
+	 * @see uk.co.jamesy.PhoneFinder.getMd5Hash
+	 */
+	public void changePass(String pass, Context context) {
 		Editor passwdfile = getSharedPreferences(PhoneFinder.PASSWORD_PREF_KEY,
 				0).edit();
 

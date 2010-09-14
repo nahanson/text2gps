@@ -3,7 +3,6 @@ package uk.co.jamesy.Text2GPS;
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,10 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.telephony.SmsManager;
 
-
+/**
+ * @author James
+ * 
+ */
 public class FindResponse extends Service {
 
 	private String from;
@@ -34,10 +36,19 @@ public class FindResponse extends Service {
 	private int locs = 0;
 	private final int MAXLOCS = 60;
 
+	/**
+	 * @param savedInstanceState
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate();
 	}
 
+	/**
+	 * Checks password and if appropriate starts location finder
+	 * 
+	 * @return void
+	 * @see android.app.Service#onStart(android.content.Intent, int)
+	 */
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// get message details from intent
@@ -50,9 +61,9 @@ public class FindResponse extends Service {
 		String[] tokens = message.split(":");
 
 		if (tokens.length >= 2) {
-			
+
 			String md5hash = PhoneFinder.getMd5Hash(tokens[1]);
-			
+
 			if (md5hash.equals(correctMd5)) {
 				startGPS();
 			} else {
@@ -64,6 +75,11 @@ public class FindResponse extends Service {
 		}
 	}
 
+	/**
+	 * Sets up Location Manager and phone hardware to locate GPS location
+	 * 
+	 * @return void
+	 */
 	private void startGPS() {
 
 		// get location manager
@@ -72,10 +88,10 @@ public class FindResponse extends Service {
 
 		// check if gps is enabled
 		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			
+
 			// start request for location
 			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 800, 0,
-					locationListener); 
+					locationListener);
 
 			startTimer(120);
 
@@ -83,12 +99,11 @@ public class FindResponse extends Service {
 			try {
 
 				pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-				wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | 
-						PowerManager.ACQUIRE_CAUSES_WAKEUP | 
-						PowerManager.ON_AFTER_RELEASE 
-						, "My Tag");
+				wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
+						| PowerManager.ACQUIRE_CAUSES_WAKEUP
+						| PowerManager.ON_AFTER_RELEASE, "My Tag");
 				wl.acquire(); // ..screen will stay on until "wl.release();"
-				
+
 			} catch (Exception e) {
 				System.out.print(e.toString());
 			}
@@ -98,16 +113,27 @@ public class FindResponse extends Service {
 		}
 	}
 
+	/**
+	 * Watches and processes location changes
+	 * 
+	 * @author James
+	 * @see android.location.LocationListner
+	 */
 	public class LocListener implements LocationListener {
 
+		/**
+		 * 
+		 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
+		 */
 		public void onLocationChanged(Location loc) {
 			try {
-				if (loc != null && locs == MAXLOCS || loc.getAccuracy() > 0.0 && loc.getAccuracy() < 0.2) { 
+				if (loc != null && locs == MAXLOCS || loc.getAccuracy() > 0.0
+						&& loc.getAccuracy() < 0.2) {
 					// convert to strings
 					strlat = Double.toString(loc.getLatitude());
 					strlon = Double.toString(loc.getLongitude());
 					accura = Float.toString(loc.getAccuracy());
-					
+
 					// send the location
 					sendSMS(from, "" + getText(R.string.gps_lat) + strlat
 							+ "\n" + getText(R.string.gps_long) + strlon + "\n"
@@ -119,7 +145,7 @@ public class FindResponse extends Service {
 					}
 
 					stopGPS();
-				}else{
+				} else {
 					locs++;
 				}
 			} catch (Exception e) {
@@ -129,17 +155,17 @@ public class FindResponse extends Service {
 
 		public void onProviderDisabled(String arg0) {
 			// TODO Auto-generated method stub
-
+			// not used
 		}
 
 		public void onProviderEnabled(String arg0) {
 			// TODO Auto-generated method stub
-
+			// not used
 		}
 
 		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 			// TODO Auto-generated method stub
-
+			// not used
 		}
 
 	}
@@ -155,22 +181,35 @@ public class FindResponse extends Service {
 		}
 	}
 
-	
+	/**
+	 * Generates a String containing a web link specific to provided lat/long
+	 * 
+	 * @param lat
+	 *            String representing Latitude of phone
+	 * @param lon
+	 *            String representing Longitude of phone
+	 * @return String containing link
+	 */
 	private String mapLink(String lat, String lon) {
 		try {
-			//lat = lat.substring(0, (lat.indexOf(".") + 15));
-			//lon = lon.substring(0, (lon.indexOf(".") + 10));
+			// lat = lat.substring(0, (lat.indexOf(".") + 15));
+			// lon = lon.substring(0, (lon.indexOf(".") + 10));
 
 			String webAddress = "http://maps.google.com/maps?q=" + lat + ","
 					+ lon;
 			return webAddress;
-			
+
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	
+	/**
+	 * Triggered if GPS location not available, attempts to fail over to last
+	 * known cooirdidates the to stop GPS
+	 * 
+	 * @return void
+	 */
 	private void failedGPS() {
 		// send last known locations
 
@@ -200,14 +239,20 @@ public class FindResponse extends Service {
 		stopGPS();
 	}
 
+	/**
+	 * Kills Location manager clears timers and wake locks Triggered if location
+	 * is not available
+	 * 
+	 * @return void
+	 */
 	private void stopGPS() {
 		// clean up and kill the service
 		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			lm.removeUpdates(locationListener); 
+			lm.removeUpdates(locationListener);
 		}
 
 		if (timer != null) {
-			timer.cancel(); 
+			timer.cancel();
 		}
 
 		if (wl != null) {
@@ -217,13 +262,24 @@ public class FindResponse extends Service {
 		stopService();
 	}
 
-
+	/**
+	 * Stops the location service
+	 * 
+	 * @return void
+	 */
 	private void stopService() {
-		stopSelf(); 
+		stopSelf();
 	}
 
-
-
+	/**
+	 * Sends a text message to the specified number with the specified text
+	 * 
+	 * @param number
+	 *            Phone number to send message to
+	 * @param body
+	 *            Message Text
+	 * @return void
+	 */
 	private void sendSMS(String number, String body) {
 		try {
 			SmsManager sm = SmsManager.getDefault();
