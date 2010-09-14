@@ -8,9 +8,20 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import uk.co.jamesy.Text2GPS.PhoneFinder;
 
-
+/**
+ * @author James
+ * 
+ */
 public class FinderReceiver extends BroadcastReceiver {
 
+	/**
+	 * Process the intent received from Android system, check for activation key
+	 * and forward message details to findResponse.java
+	 * 
+	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context,
+	 *      android.content.Intent)
+	 * @see uk.co.jamesy.FinderReciver
+	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String from = "";
@@ -27,7 +38,7 @@ public class FinderReceiver extends BroadcastReceiver {
 		SmsMessage[] msgs = null;
 
 		if (bundle != null) {
-			// retrieve the message
+			// retrieve the message text
 			Object[] pdus = (Object[]) bundle.get("pdus");
 
 			msgs = new SmsMessage[pdus.length];
