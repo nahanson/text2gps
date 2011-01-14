@@ -47,5 +47,7 @@ public final class R {
         public static final int pass_valfail=0x7f04000c;
         public static final int password_confirm_label=0x7f040003;
         public static final int password_label=0x7f040002;
+        public static final int sw_nonum=0x7f040013;
+        public static final int sw_note=0x7f040014;
     }
 }
