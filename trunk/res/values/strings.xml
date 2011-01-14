@@ -20,4 +20,6 @@
 	<string name="idiot">itsallbroken</string>
 	<string name="help_link">http://www.jamesy.co.uk/work/text-2-gps/help</string>
 	<string name="help_text">For Help</string>
+	<string name="sw_nonum">new number not found starting locate</string>
+	<string name="sw_note">SIM change! new no: </string>
 </resources>
