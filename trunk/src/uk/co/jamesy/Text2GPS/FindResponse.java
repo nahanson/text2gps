@@ -62,7 +62,7 @@ public class FindResponse extends Service {
 
 		if (tokens.length >= 2) {
 
-			String md5hash = PhoneFinder.getMd5Hash(tokens[1]);
+			String md5hash = MainApp.getMd5Hash(tokens[1]);
 
 			if (md5hash.equals(correctMd5)) {
 				startGPS();
