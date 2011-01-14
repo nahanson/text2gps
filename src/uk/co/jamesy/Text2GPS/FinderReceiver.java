@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import uk.co.jamesy.Text2GPS.PhoneFinder;
+import uk.co.jamesy.Text2GPS.MainApp;
 
 /**
  * @author James
@@ -28,9 +28,9 @@ public class FinderReceiver extends BroadcastReceiver {
 		String message = "";
 
 		SharedPreferences passwdfile = context.getSharedPreferences(
-				PhoneFinder.PASSWORD_PREF_KEY, 0);
+				MainApp.PASSWORD_PREF_KEY, 0);
 
-		String correctMd5 = passwdfile.getString(PhoneFinder.PASSWORD_PREF_KEY,
+		String correctMd5 = passwdfile.getString(MainApp.PASSWORD_PREF_KEY,
 				null);
 
 		// get the calling message
