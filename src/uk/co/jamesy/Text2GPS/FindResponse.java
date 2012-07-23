@@ -3,6 +3,7 @@ package uk.co.jamesy.Text2GPS;
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;

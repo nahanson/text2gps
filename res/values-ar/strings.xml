@@ -15,8 +15,17 @@
 	<string name="pass_valfail">النص لتحديد المواقع</string>
 	<string name="pass_noMatch">كلمات المرور لا تتطابق</string>
 	<string name="pass_OldnoMatch">كلمة السر القديمة غير صحيحة</string>
-	<string name="alert">إنذار</string>
 	<string name="idiot">itsallbroken</string>
-	<string name="help_link">http://www.jamesy.co.uk/work/text-2-gps/help</string>
+	<string name="help_link">http://www.jamesy.co.uk/work/text-2-gps/http://www.jamesy.co.uk/work/text-2-gps/http://www.jamesy.co.uk/work/text-2-gps/HOME
+BLOG
+WORK
+CONTACT
+LINKS
+Text 2 GPShttp://www.jamesy.co.uk/work/text-2-gps/http://www.jamesy.co.uk/work/text-2-gps/http://www.jamesy.co.uk/work/text-2-gps/http://www.jamesy.co.uk/work/text-2-gps/http://www.jamesy.co.uk/work/text-2-gps/http://www.jamesy.co.uk/work/text-2-gps/</string>
 	<string name="help_text">مساعدة</string>
+	<string name="sw_nonum">new number not found starting locate</string>
+	<string name="sw_note">SIM change! new no: </string>
+	<string name="sim_watcher">SIM Watcher </string>
+	<string name="sw_label">Enter contact number(not this phone) </string>
+	<string name="sw_btn">Update </string>
 </resources>

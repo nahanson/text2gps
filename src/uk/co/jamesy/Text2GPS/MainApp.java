@@ -3,6 +3,7 @@ package uk.co.jamesy.Text2GPS;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,6 +24,8 @@ public class MainApp extends Activity {
 	private EditText pass1;
 	private EditText pass2;
 	private EditText oldPass;
+	private CheckBox swCheck;
+	private EditText swContact;
 	private int mode = -1;
 	private String expass;
 
@@ -37,6 +41,8 @@ public class MainApp extends Activity {
 			// no password set
 			pass1 = (EditText) findViewById(R.id.password);
 			pass2 = (EditText) findViewById(R.id.password_confirm);
+			swCheck = (CheckBox) findViewById(R.id.swCheck);
+			swContact = (EditText) findViewById(R.id.sw_contact);
 
 		} else {
 			// password existing add confirm field
@@ -47,10 +53,15 @@ public class MainApp extends Activity {
 			pass1 = (EditText) findViewById(R.id.password);
 			pass2 = (EditText) findViewById(R.id.password_confirm);
 			oldPass = (EditText) findViewById(R.id.old_password);
+			swCheck = (CheckBox) findViewById(R.id.swCheck);
+			swContact = (EditText) findViewById(R.id.sw_contact);
 		}
 
 		Button button = (Button) findViewById(R.id.ok);
 		button.setOnClickListener(clickListener);
+		
+		Button sw_Btn = (Button) findViewById(R.id.sw_btn);
+		sw_Btn.setOnClickListener(swClickListener);
 
 	}
 
@@ -103,6 +114,22 @@ public class MainApp extends Activity {
 
 		}
 
+	};
+	
+	private OnClickListener swClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			String contact = swContact.toString();
+			String enabled = swCheck.toString();
+			if(enabled != null){
+				
+			}
+			else{
+				System.out.println(contact);
+			}
+		}
+		
 	};
 
 	/**
